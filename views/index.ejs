@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>File Uploading System</title>
+    <style>
+        body {
+            background-color:#E6ECF0;
+            font-size: 12pt !important;
+        }
+        .display-4 {
+            color:#333;
+            font-size:18pt ;
+        }        
+    </style>
+    <script>
+        function fileChange(val){
+            file = val.files[0];
+            if(file){
+                document.getElementById("uploadBtn").disabled = false;
+            } else {
+                document.getElementById("uploadBtn").disabled = true;
+            }
+        }
+    </script>
+  </head>
+  <body class="display-4">    
+    <div class="container">                        
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <br><br>
+                <div class="black my-4 text-center display-4">File Upload</div>                
+                <div class="card">    
+                    <div class="card-body">
+                        <form action="/" method="POST" enctype="multipart/form-data">                            
+                            <input type="file" name="file" onChange="fileChange(this);">      
+                            <br><br>                                                  
+                            <button type="submit"  class="btn btn-primary btn-block " id="uploadBtn" disabled>Upload the file <i class="fa fa-upload"></i></it></button>
+                        </form>                                                
+                    </div>                                                     
+                </div>                  
+            </div>
+            <div class="col-md-4">
+                <br><br>
+                <div class="black my-4 text-center display-4">Uploaded Files</div> 
+                <% if(files.length===0){%>
+                    <div class="text-center">No files to show.</div>
+                <%}%>    
+                <% files.forEach((file)=>{ %>
+                    <form method="POST" action="/deleteFile/<%=file._id%>">
+                        <button class="btn btn-danger btn-sm my-1" style="float: right;"><i class="fa fa-trash"></i> Delete</button>
+                    </form>                    
+                    <%if(file.contentType==='image/png' || file.contentType==='image/jpeg' || file.contentType==='image/jpg'){%>                    
+                        <img src='getfile/<%=file.filename%>' type='<%=file.contentType%>' class="img-thumbnail" style="width:100%;"><br><br>
+                    <%} else {%>
+                        <div class="card" style="width: 100%;">    
+                            <div class="card-body">
+                                <%=file.filename%>
+                                <a style="float:right" href='getfile/<%=file.filename%>' class="btn btn-success">Dowload <i class="fa fa-arrow-down"></i></a>
+                            </div>                                    
+                        </div>  
+                        <br>
+                    <%}%>                    
+                <% }) %>  
+            </div>  
+            <div class="col-md-2"></div>          
+        </div>
+        <br><br><br><br>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
