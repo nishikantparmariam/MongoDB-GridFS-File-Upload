@@ -21,7 +21,7 @@ app.set('views','./views');
 
 
 //database connection
-const dbURI = 'mongodb+srv://niks:niks@cluster0-fif98.mongodb.net/test?retryWrites=true&w=majority';
+const dbURI = ''; //HIDING THIS FOR SECURITY PURPOSE
 const connection = mongoose.createConnection(dbURI);
 
 //GridFS stream, will be initialized when database connection is set
